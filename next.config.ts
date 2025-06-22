@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    domains: ['cdn.sanity.io'], // Simple domain whitelist
+  },
+  reactStrictMode: true,
 };
 
 export default nextConfig;
