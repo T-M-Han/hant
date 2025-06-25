@@ -1,53 +1,35 @@
-'use client';
-import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
-import { FiExternalLink, FiGithub, FiArrowRight } from 'react-icons/fi';
-import { useState } from 'react';
-import Image from 'next/image'; // Added Image import
+'use client'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FiExternalLink, FiGithub, FiArrowRight } from 'react-icons/fi'
+import { getFeaturedProjects } from '@/lib/sanity.queries'
 
 type Project = {
-  title: string;
-  description: string;
-  tags: string[];
-  image: string;
-  github: string;
-  liveDemo?: string;
-};
-
-const featuredProjects: Project[] = [
-  {
-    title: "E-Commerce Platform",
-    description: "Full-stack e-commerce solution with cart, checkout, and admin dashboard.",
-    tags: ["HTML5", "CSS3", "PHP", "JavaScript", "MYSQL", "Apache"],
-    image: "/projects/seeker.png",
-    github: "https://github.com/T-M-Han/WebProject_Seeker",
-  },
-  {
-    title: "Secure Token-Based Authentication System",
-    description: "A secure JWT-based authentication system, implementing industry-standard security practices.",
-    tags: ["Python", "Tkinter GUI"],
-    image: "/projects/token.png",
-    github: "https://github.com/T-M-Han/Secure-Token-Based-Authentication-System" 
-  },
-  {
-    title: "WebProject_AI-Solution",
-    description: "An web project featuring a full-stack e-commerce platform for sneaker enthusiasts with admin management.",
-    tags: ["React.js", "Tailwind CSS","JavaScript", "Vite", "Git"],
-    image: "/projects/aisolution.png",
-    github: "https://github.com/T-M-Han/WebProject_AI-Solution",
-  },
-];
+  title: string
+  description: string
+  tags: string[]
+  github: string
+  liveDemo?: string
+  imageUrl: string
+}
 
 export default function ProjectsShowcase() {
-  const [showInProgress, setShowInProgress] = useState(false);
+  const [projects, setProjects] = useState<Project[]>([])
+  const [showInProgress, setShowInProgress] = useState(false)
+
+  useEffect(() => {
+    getFeaturedProjects().then(setProjects)
+  }, [])
 
   const handleLiveDemoClick = (e: React.MouseEvent, hasLiveDemo: boolean) => {
     if (!hasLiveDemo) {
-      e.preventDefault();
-      setShowInProgress(true);
-      setTimeout(() => setShowInProgress(false), 3000);
+      e.preventDefault()
+      setShowInProgress(true)
+      setTimeout(() => setShowInProgress(false), 3000)
     }
-  };
+  }
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-black relative overflow-hidden">
@@ -69,7 +51,6 @@ export default function ProjectsShowcase() {
               A selection of my academic and personal projects showcasing my skills and experience
             </p>
           </div>
-          
           <Link
             href="/projects"
             className="flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-orange-600 to-red-500 text-white hover:from-orange-500 hover:to-red-600 transition-all group"
@@ -81,7 +62,7 @@ export default function ProjectsShowcase() {
 
         {/* Featured Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredProjects.map((project, index) => (
+          {projects.map((project, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -92,23 +73,21 @@ export default function ProjectsShowcase() {
               className="bg-black backdrop-blur-sm rounded-xl overflow-hidden border border-gray-800 hover:border-orange-500/30 transition-all relative z-10 flex flex-col h-full"
             >
               <div className="h-48 bg-gray-800 overflow-hidden relative">
-                <Image 
-                  src={project.image} 
+                <Image
+                  src={project.imageUrl}
                   alt={project.title}
-                  width={500} // Added width
-                  height={300} // Added height
+                  width={500}
+                  height={300}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              
               <div className="p-6 flex flex-col flex-grow">
                 <div className="flex-grow">
                   <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
                   <p className="text-gray-400 mb-4 line-clamp-3">{project.description}</p>
-                  
                   <div className="flex flex-wrap gap-2 mb-6">
                     {project.tags.map((tag, i) => (
-                      <span 
+                      <span
                         key={i}
                         className="px-3 py-1 text-xs rounded-full bg-gradient-to-r from-orange-600/20 to-red-500/20 text-orange-300"
                       >
@@ -117,7 +96,6 @@ export default function ProjectsShowcase() {
                     ))}
                   </div>
                 </div>
-                
                 <div className="mt-auto flex gap-3">
                   <Link
                     href={project.github}
@@ -167,5 +145,5 @@ export default function ProjectsShowcase() {
         )}
       </AnimatePresence>
     </section>
-  );
+  )
 }
