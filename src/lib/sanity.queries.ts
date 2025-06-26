@@ -1,6 +1,7 @@
 import { createClient } from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
 
+// === SANITY CLIENT ===
 export const client = createClient({
   projectId: 'w9fhrrqx',
   dataset: 'production',
@@ -16,6 +17,7 @@ export function urlFor(source: SanityImageSource) {
   return builder.image(source)
 }
 
+// === PROJECTS ===
 export interface Project {
   title: string
   description: string
@@ -33,6 +35,36 @@ export async function getFeaturedProjects(): Promise<Project[]> {
     github,
     liveDemo,
     "imageUrl": image.asset->url
+  }`
+  return await client.fetch(query)
+}
+
+// === JUST LEARNED ===
+export interface LearnedItem {
+  _id: string
+  title: string
+  description: string
+  date: string
+  tags?: string[]
+  link?: string
+  notes?: any[]
+  how?: any[]
+  imageUrl?: string
+  titleImageUrl?: string
+}
+
+export async function getLearnedItems(): Promise<LearnedItem[]> {
+  const query = `*[_type == "learned"] | order(date desc) {
+    _id,
+    title,
+    description,
+    date,
+    tags,
+    link,
+    notes,
+    how,
+    "imageUrl": image.asset->url,
+    "titleImageUrl": titleImage.asset->url
   }`
   return await client.fetch(query)
 }
