@@ -5,6 +5,7 @@ import { getLearnedItems, LearnedItem } from '@/lib/sanity.queries'
 import { PortableText } from '@portabletext/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function LearnedPage() {
   const [items, setItems] = useState<LearnedItem[] | null>(null)
@@ -57,7 +58,8 @@ export default function LearnedPage() {
         animate={{ y: [0, -40, 0], scale: [1, 1.15, 1] }}
         transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
       />
-      <div className="max-w-7xl mx-auto">
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <h1 className="text-4xl sm:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">
           Just Learned
         </h1>
@@ -75,10 +77,13 @@ export default function LearnedPage() {
                 className="bg-white/5 p-6 rounded-2xl border border-white/10 shadow hover:shadow-orange-500/20 transition"
               >
                 {item.titleImageUrl && (
-                  <img
+                  <Image
                     src={item.titleImageUrl}
                     alt={item.title}
+                    width={600}
+                    height={300}
                     className="w-full h-48 object-cover rounded-lg mb-4"
+                    priority
                   />
                 )}
                 <h2 className="text-xl font-semibold text-orange-400 mb-2">{item.title}</h2>
@@ -147,9 +152,11 @@ export default function LearnedPage() {
               <p className="text-gray-300 mb-4">{selected.description}</p>
 
               {selected.imageUrl && (
-                <img
+                <Image
                   src={selected.imageUrl}
                   alt="Supporting"
+                  width={800}
+                  height={450}
                   className="w-full rounded-lg mb-4 border border-white/10"
                 />
               )}

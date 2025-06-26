@@ -1,5 +1,6 @@
 import { createClient } from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
+import type { PortableTextBlock } from 'sanity'
 
 // === SANITY CLIENT ===
 export const client = createClient({
@@ -47,8 +48,8 @@ export interface LearnedItem {
   date: string
   tags?: string[]
   link?: string
-  notes?: any[]
-  how?: any[]
+  notes?: PortableTextBlock[]
+  how?: PortableTextBlock[]   
   imageUrl?: string
   titleImageUrl?: string
 }
