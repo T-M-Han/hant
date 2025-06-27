@@ -1,145 +1,139 @@
-'use client';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
+'use client'
+
+import { useEffect, useState } from 'react'
+import { getBlogPosts, BlogPost } from '@/lib/sanity.queries'
+import { PortableText } from '@portabletext/react'
+import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function BlogsPage() {
+  const [posts, setPosts] = useState<BlogPost[]>([])
+  const [selected, setSelected] = useState<BlogPost | null>(null)
+
+  useEffect(() => {
+    getBlogPosts().then(setPosts)
+  }, [])
+
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-black relative overflow-hidden">
-      {/* Animated Grid Background */}
-      <div className="absolute inset-0 overflow-hidden z-0">
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] opacity-20" />
-        
-        {/* Moving gradient overlay */}
-        <motion.div
-          className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.1)_0%,transparent_70%)]"
-          animate={{
-            x: [0, 100, 0],
-            y: [0, 50, 0],
-          }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "linear"
-          }}
-        />
-        
-        {/* Floating particles */}
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-orange-500/10"
-            style={{
-              width: `${Math.random() * 10 + 5}px`,
-              height: `${Math.random() * 10 + 5}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, (Math.random() - 0.5) * 100],
-              x: [0, (Math.random() - 0.5) * 100],
-              opacity: [0.2, 0.8, 0.2],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 10,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-              delay: Math.random() * 5
-            }}
-          />
-        ))}
+    <section className="relative min-h-screen px-6 py-12 bg-black text-white overflow-hidden">
+      {/* 🌀 Animated Background */}
+      <motion.div
+        className="absolute top-1/4 left-1/3 w-40 h-40 bg-orange-500/20 blur-2xl rounded-full"
+        animate={{ y: [0, -30, 0], scale: [1, 1.2, 1] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        className="absolute top-1/2 right-1/4 w-32 h-32 bg-red-500/10 blur-xl rounded-full"
+        animate={{ y: [0, 20, 0], scale: [1, 0.9, 1] }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+      />
+
+      <div className="max-w-7xl mx-auto z-10 relative">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">
+          Blog Posts
+        </h1>
+
+        {posts.length === 0 ? (
+          <p className="text-center text-gray-500">No blog posts yet.</p>
+        ) : (
+          <div className="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+            {posts.map((post) => (
+              <motion.div
+                key={post._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="bg-white/5 p-6 rounded-2xl border border-white/10 shadow hover:shadow-orange-500/20 transition"
+              >
+                {post.coverImageUrl && (
+                  <Image
+                    src={post.coverImageUrl}
+                    alt={post.title}
+                    width={400}
+                    height={200}
+                    className="w-full h-48 object-cover rounded-lg mb-4"
+                  />
+                )}
+                <h2 className="text-xl font-semibold text-orange-400 mb-2">{post.title}</h2>
+                <div className="text-sm text-gray-400 mb-2">
+                  {new Date(post.date).toLocaleDateString()}
+                </div>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {post.tags?.map((tag, i) => (
+                    <span key={i} className="px-2 py-1 bg-orange-600/20 text-orange-300 rounded-full text-xs">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <button
+                  onClick={() => setSelected(post)}
+                  className="text-sm text-orange-400 underline hover:text-orange-300"
+                >
+                  Read More
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Existing floating background elements */}
-      <motion.div
-        className="absolute top-20 left-20 w-16 h-16 rounded-full bg-orange-500/10 blur-xl z-10"
-        animate={{
-          x: [0, 20, 0],
-          y: [0, -15, 0],
-          rotate: [0, 180, 360]
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      />
-      <motion.div
-        className="absolute bottom-20 right-20 w-24 h-24 rounded-full bg-red-500/10 blur-xl z-10"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.7, 1, 0.7]
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-
-      {/* Main content */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="text-center max-w-2xl mx-auto relative z-20"
-      >
-        {/* Animated typewriter effect */}
-        <div className="mb-10">
+      {/* Modal */}
+      <AnimatePresence>
+        {selected && (
           <motion.div
-            animate={{ 
-              rotate: [-5, 5, -5],
-            }}
-            transition={{ 
-              duration: 2, 
-              repeat: Infinity, 
-              repeatType: "reverse" 
-            }}
-            className="inline-block"
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center px-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            <div className="text-6xl md:text-7xl mb-6">✍️</div>
-          </motion.div>
-          
-          <motion.h1 
-            className="text-4xl sm:text-5xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <span className="bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">
-              Blog Coming Soon
-            </span>
-          </motion.h1>
-          
-          <motion.p
-            className="text-xl text-gray-400 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            {"I&rsquo;m currently brewing some insightful content about my development journey. Stay tuned for articles on coding, design, and tech experiences!"}
-          </motion.p>
-        </div>
-
-        {/* Navigation buttons */}
-        <motion.div
-          className="flex flex-col sm:flex-row justify-center gap-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link
-              href="/"
-              className="inline-flex items-center px-6 py-3 rounded-lg bg-gradient-to-r from-orange-600 to-red-500 text-white font-medium hover:from-orange-500 hover:to-red-600 transition-all"
+            <motion.div
+              className="bg-zinc-900 text-white rounded-xl max-w-3xl w-full p-6 overflow-y-auto max-h-[90vh] shadow-lg relative"
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 50, opacity: 0 }}
+              transition={{ duration: 0.3 }}
             >
-              Return Home
-            </Link>
+              <button
+                onClick={() => setSelected(null)}
+                className="absolute top-3 right-4 text-gray-400 hover:text-white text-xl"
+              >
+                &times;
+              </button>
+
+              <h2 className="text-2xl font-bold text-orange-400 mb-2">{selected.title}</h2>
+              <div className="text-sm text-gray-400 mb-4">{new Date(selected.date).toLocaleDateString()}</div>
+
+              {selected.coverImageUrl && (
+                <Image
+                  src={selected.coverImageUrl}
+                  alt="Cover"
+                  width={800}
+                  height={400}
+                  className="rounded-lg mb-6"
+                />
+              )}
+
+              <PortableText value={selected.content} />
+
+              {selected.gallery && selected.gallery.length > 0 && (
+                <div className="mt-6 grid grid-cols-2 gap-4">
+                  {selected.gallery.map((img, i) => (
+                    <Image
+                      key={i}
+                      src={img}
+                      alt={`Gallery image ${i + 1}`}
+                      width={400}
+                      height={300}
+                      className="rounded-lg border border-white/10"
+                    />
+                  ))}
+                </div>
+              )}
+            </motion.div>
           </motion.div>
-        </motion.div>
-      </motion.div>
+        )}
+      </AnimatePresence>
     </section>
-  );
+  )
 }

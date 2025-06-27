@@ -1,43 +1,58 @@
+'use client';
+
 import Link from 'next/link';
 import { Github, Linkedin, Mail } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { getContactInfo, ContactInfo } from '@/lib/sanity.queries';
 
 export default function Footer() {
+  const [contact, setContact] = useState<ContactInfo | null>(null);
   const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    getContactInfo().then(setContact);
+  }, []);
 
   return (
     <footer className="bg-transparent border-t border-gray-200/30 dark:border-gray-800/30 backdrop-blur-sm">
       <div className="container mx-auto px-6 py-12">
-        {/* Centered Container */}
         <div className="flex flex-col items-center justify-center space-y-6 text-center">
-          
           {/* Social Links - Centered */}
-          <div className="flex space-x-6">
-            <Link
-              href="https://github.com/T-M-Han"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
-              aria-label="GitHub"
-            >
-              <Github size={20} />
-            </Link>
-            <Link
-              href="https://linkedin.com/in/han2873292a7/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin size={20} />
-            </Link>
-            <Link
-              href="mailto:thamyohan736@gmail.com"
-              className="text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
-              aria-label="Email"
-            >
-              <Mail size={20} />
-            </Link>
-          </div>
+          {contact && (
+            <div className="flex space-x-6">
+              {contact.github && (
+                <Link
+                  href={contact.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+                  aria-label="GitHub"
+                >
+                  <Github size={20} />
+                </Link>
+              )}
+              {contact.linkedin && (
+                <Link
+                  href={contact.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin size={20} />
+                </Link>
+              )}
+              {contact.email && (
+                <Link
+                  href={`mailto:${contact.email}`}
+                  className="text-gray-600 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+                  aria-label="Email"
+                >
+                  <Mail size={20} />
+                </Link>
+              )}
+            </div>
+          )}
 
           {/* Copyright - Centered */}
           <p className="text-gray-600 dark:text-gray-400">

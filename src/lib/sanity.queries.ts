@@ -4,9 +4,9 @@ import type { PortableTextBlock } from 'sanity'
 
 // === SANITY CLIENT ===
 export const client = createClient({
-  projectId: 'w9fhrrqx',
-  dataset: 'production',
-  apiVersion: '2023-06-01',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION!,
   useCdn: false,
 })
 
@@ -17,6 +17,7 @@ type SanityImageSource = string | { asset: { _ref: string } }
 export function urlFor(source: SanityImageSource) {
   return builder.image(source)
 }
+
 
 // === PROJECTS ===
 export interface Project {
@@ -66,6 +67,82 @@ export async function getLearnedItems(): Promise<LearnedItem[]> {
     how,
     "imageUrl": image.asset->url,
     "titleImageUrl": titleImage.asset->url
+  }`
+  return await client.fetch(query)
+}
+
+// === BLOGS ===
+export interface BlogPost {
+  _id: string
+  title: string
+  date: string
+  content: any[]
+  tags?: string[]
+  coverImageUrl?: string
+  gallery?: string[]
+}
+
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  const query = `*[_type == "blog"] | order(date desc) {
+    _id,
+    title,
+    date,
+    content,
+    tags,
+    "coverImageUrl": coverImage.asset->url,
+    "gallery": gallery[].asset->url
+  }`
+  return await client.fetch(query)
+}
+
+// === Tech Logo ===
+export interface TechLogo {
+  _id: string
+  name: string
+  iconUrl: string
+}
+
+export async function getTechLogos(): Promise<TechLogo[]> {
+  const query = `*[_type == "techLogo"]{
+    _id,
+    name,
+    "iconUrl": icon.asset->url
+  }`
+  return await client.fetch(query)
+}
+
+// === Hero ===
+export interface Profile {
+  headline: string
+  subheadline: string
+  description: string
+  profileImageUrl: string
+}
+
+export async function getProfile(): Promise<Profile | null> {
+  const query = `*[_type == "profile"][0] {
+    headline,
+    subheadline,
+    description,
+    "profileImageUrl": profileImage.asset->url
+  }`
+  return await client.fetch(query)
+}
+
+// === Contact ===
+export interface ContactInfo {
+  email: string
+  location: string
+  linkedin?: string
+  github?: string
+}
+
+export async function getContactInfo(): Promise<ContactInfo | null> {
+  const query = `*[_type == "contact"][0]{
+    email,
+    location,
+    linkedin,
+    github
   }`
   return await client.fetch(query)
 }
