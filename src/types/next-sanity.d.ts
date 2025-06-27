@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 declare module 'next-sanity' {
   import { ClientConfig } from '@sanity/client'
   import type { ImageUrlBuilder } from '@sanity/image-url'
