@@ -1,6 +1,7 @@
 import { createClient } from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
-import type { PortableTextBlock } from 'sanity'
+import type { PortableTextBlock } from '@portabletext/types'
+
 
 // === SANITY CLIENT ===
 export const client = createClient({
