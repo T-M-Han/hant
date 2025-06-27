@@ -5,7 +5,6 @@ import { getBlogPosts, BlogPost } from '@/lib/sanity.queries'
 import { PortableText } from '@portabletext/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
 
 export default function BlogsPage() {
   const [posts, setPosts] = useState<BlogPost[]>([])

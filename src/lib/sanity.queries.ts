@@ -76,7 +76,7 @@ export interface BlogPost {
   _id: string
   title: string
   date: string
-  content: any[]
+  content: PortableTextBlock[]
   tags?: string[]
   coverImageUrl?: string
   gallery?: string[]
