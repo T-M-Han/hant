@@ -136,6 +136,12 @@ export default function ProjectsPage() {
           </h1>
         </motion.div>
 
+        {/* Projects Grid Notice */}
+        <p className="text-center text-sm sm:text-base text-gray-400 mb-10 max-w-2xl mx-auto">
+          <span className="text-orange-400 font-medium">Note:</span> Some projects are still in progress and not fully deployed yet.
+          You can still explore the source code on GitHub.
+        </p>
+
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
