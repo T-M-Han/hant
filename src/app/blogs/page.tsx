@@ -33,7 +33,7 @@ export default function BlogsPage() {
           Blog
         </h1>
         <h3 className="text-4xl sm:text-2xl font-medium mb-6 text-center bg-orange-400 bg-clip-text text-transparent">
-          Let's get to know each other! I'm sharing my insights, stories, and reflections.
+          Lets get to know each other! I'm sharing my insights, stories, and reflections.
         </h3>
 
         {posts.length === 0 ? (
