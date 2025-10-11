@@ -29,9 +29,12 @@ export default function BlogsPage() {
       />
 
       <div className="max-w-7xl mx-auto z-10 relative">
-        <h1 className="text-4xl sm:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">
-          Blog Posts
+        <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-center bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">
+          Blog
         </h1>
+        <h3 className="text-4xl sm:text-2xl font-medium mb-6 text-center bg-orange-400 bg-clip-text text-transparent">
+          Let's get to know each other! I'm sharing my insights, stories, and reflections.
+        </h3>
 
         {posts.length === 0 ? (
           <p className="text-center text-gray-500">No blog posts yet.</p>
