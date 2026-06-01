@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HANT — Personal Portfolio Website
 
-## Getting Started
+A modern personal portfolio website built to showcase my projects, learning journey, blog posts, and contact information.
 
-First, run the development server:
+This portfolio is designed as a professional online profile for my software development and technology career. It uses a clean, responsive interface with dynamic content managed through Sanity CMS.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Live Website
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[View Portfolio](https://hant.dev)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## About
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+HANT is my personal portfolio website, created to present my technical projects, academic work, learning progress, and professional background.
 
-## Learn More
+The website includes sections for:
 
-To learn more about Next.js, take a look at the following resources:
+- About
+- Projects
+- Just Learned
+- Blog
+- Contact
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Frontend:** Next.js, TypeScript, React, Tailwind CSS  
+**CMS:** Sanity CMS  
+**Deployment:** Vercel  
+**Version Control:** Git & GitHub
 
-## Deploy on Vercel
+## Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Responsive modern portfolio design
+- Dynamic project content managed with Sanity CMS
+- Blog and learning entries
+- Contact and social media information
+- Deployed with Vercel
+- Clean component-based structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Purpose
+
+This repository is intended to showcase my portfolio website and development approach. It is not provided as a template or starter project.
+
+## Author
+
+**Thaw Myo Han**  
+Portfolio: [hant.dev](https://hant.dev)  
+GitHub: [T-M-Han](https://github.com/T-M-Han)  
+LinkedIn: [Thaw Myo Han](https://www.linkedin.com/in/han2873292a7/)
+
+## Note
+
+This project is shared publicly for portfolio and demonstration purposes only. Please do not copy or reuse the design, content, or source code without permission.
