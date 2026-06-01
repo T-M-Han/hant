@@ -43,8 +43,7 @@ This repository is intended to showcase my portfolio website and development app
 ## Author
 
 **Thaw Myo Han**  
-Portfolio: [hant.dev](https://hant.dev)  
-GitHub: [T-M-Han](https://github.com/T-M-Han)  
+Portfolio: [hant.dev](https://hant.dev)   
 LinkedIn: [Thaw Myo Han](https://www.linkedin.com/in/han2873292a7/)
 
 ## Note
