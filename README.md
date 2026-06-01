@@ -1,4 +1,4 @@
-# HANT — Personal Portfolio Website
+# HANT — Portfolio Website
 
 A modern personal portfolio website built to showcase my projects, learning journey, blog posts, and contact information.
 
